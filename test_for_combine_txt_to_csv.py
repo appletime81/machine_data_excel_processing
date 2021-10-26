@@ -4,6 +4,7 @@ import pandas as pd
 from pprint import pprint
 start = time.time()
 
+
 path = 'ICS_OEE/2F_T#17/20210723_005155.txt'
 
 
@@ -21,13 +22,7 @@ def get_files(prefix_path):
 
 
 def combine_all_txt_files(txt_files):
-    col1 = list()
-    col2 = list()
-    col3 = list()
-    col4 = list()
-    col5 = list()
-    col6 = list()
-    col7 = list()
+    col_list = [list() for i in range(10)]
 
     for txt_file in txt_files:
         with open(txt_file, 'r') as fp:
@@ -35,29 +30,22 @@ def combine_all_txt_files(txt_files):
         line = lines[0]
         line = line.split(',')
         line[-1] = line[-1].replace('\n', '')
-        col1.append(line[0])
-        col2.append(line[1])
-        col3.append(line[2])
-        col4.append(line[3])
-        col5.append(line[4])
-        col6.append(line[5])
-        col7.append(line[6])
+        for i in range(10):
+            try:
+                col_list[i].append(line[i])
+            except:
+                col_list[i].append('')
 
-    _dict = {
-        '1': col1,
-        '2': col2,
-        '3': col3,
-        '4': col4,
-        '5': col5,
-        '6': col6,
-        '7': col7,
-    }
+    _dict = dict([(i+1, _list) for i, _list in enumerate(col_list)])
+    print(_dict)
+    for k, v in _dict.items():
+        print(len(v))
     df = pd.DataFrame(_dict)
     df.to_csv(f'{prefix_path.split("/")[1]}.csv', index=False)
 
 
 if __name__ == "__main__":
-    prefix_path = 'ICS_OEE/2F_T#17/'
+    prefix_path = 'ICS_OEE/4F_T#02/'
     txt_files = get_files(prefix_path)
     combine_all_txt_files(txt_files=txt_files)
 
