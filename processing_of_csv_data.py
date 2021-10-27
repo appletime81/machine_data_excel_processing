@@ -147,13 +147,16 @@ def policy(csv_file, data_dict):
                                               time_delta(df.loc[i - 1, '1'], df.loc[i, '1'])]
                     data_dict['Error_Code'] += ['N.A', SHEETCLEANING]
                     data_dict['Stop_Reason'] += ['N.A', 'MA Waiting']
-        except:
-            pass
+        except Exception as e:
+            print(e)
+
     return data_dict
 
 
 def main():
     prefix_paths = glob.glob('ICS_OEE/*/')
+    prefix_paths=[path.replace('\\', '/') for path in prefix_paths]
+    print(prefix_paths)
     for prefix_path in prefix_paths:
         txt_files = get_files(prefix_path)
         combine_all_txt_files(txt_files, prefix_path)
