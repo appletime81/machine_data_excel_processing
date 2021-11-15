@@ -6,7 +6,7 @@ from datetime import datetime
 start = time.time()
 
 
-path = 'ICS_OEE/2F_T#17/20210723_005155.txt'
+# path = 'ICS_OEE/2F_T#17/20210723_005155.txt'
 
 
 def _sort(filename):
